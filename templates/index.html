@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+
+{% block title %} Minimall Management Application {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron p-3">
+                    <h2>Manage <b>Product </b>
+                        <button type="button" class="btn btn-success float-right"
+                                data-toggle="modal"
+                                data-target="#myModal">Add New Product
+                        </button>
+                    </h2>
+
+                    <table class="table table-hover table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Release Date</th>
+                            <th>Expire Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Pepsi</td>
+                            <td>03/05/1998</td>
+                            <td>07/12/2022</td>
+                            <td>
+                                <a href="" class="btn btn-warning btn-xs"
+                                   data-toggle="modal"
+                                   data-target="#modalEdit">Edit</a>
+                                <a href="" class="btn btn-danger btn-xs"
+                                   onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add New Product</h5>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Release Date</label>
+                                    <input type="text" class="form-control" name="releaseDate" required="1">
+                                </div>
+                                <div class="form-group">
+                                    <label>Expire Date</label>
+                                    <input type="text" class="form-control" name="expireDate" required="1">
+                                </div>
+                                <div class="form-group modal-footer">
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="modalEdit" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Product</h5>
+                            </div>
+                            <form action="" method="POST">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Release Date</label>
+                                    <input type="text" class="form-control" name="releaseDate" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Expire Date</label>
+                                    <input type="text" class="form-control" name="expireDate" value="">
+                                </div>
+                                <div class="form-group modal-footer">
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
