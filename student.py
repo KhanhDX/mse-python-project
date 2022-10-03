@@ -1,16 +1,28 @@
 class Student:
     def __init__(self, data):
-        rnumber, fname, lname, email, dob, address, score = data
+        [rnumber, fname, lname, email, dob, address] = [ x.strip() for x in data[:6]]
         self.__rnumber = rnumber
         self.__fname = fname
         self.__lname = lname
         self.__email = email
         self.__dob = dob
         self.__address = address
-        self.__score = score
+        self.__score = data[6]
 
-    def data(self):
-        return (self.__rnumber, self.__fname, self.__lname, self.__email, self.__dob, self.__address, self.__score)
+    def data(self, update = False):
+        data = (self.__fname, self.__lname, self.__email, self.__dob, self.__address, self.__score)
+        return  data + (self.__rnumber,) if update else (self.__rnumber,) + data
+
+    def dump(self):
+        return {
+            'roll_number' : self.__rnumber,
+            'first_name' : self.__fname,
+            'last_name' : self.__lname,
+            'email' : self.__email,
+            'date_of_birth' : self.__dob,
+            'address' : self.__address,
+            'score' : self.__score
+        }
 
     @property
     def rnumber(self): return self.__rnumber

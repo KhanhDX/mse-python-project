@@ -1,0 +1,23 @@
+{% extends 'base_dialog.html' %}
+
+{% block title %}Update Student{% endblock %}
+
+{% block disabledRNumber %} disabled {% endblock %}
+
+{% block urlForm %}{{url_for('update')}}{% endblock %}
+
+{% block hid_rnumber %}{{row.rnumber}}{% endblock %}
+
+{% block rnumber %}{{row.rnumber}}{% endblock %}
+
+{% block fname %}{{row.fname}}{% endblock %}
+
+{% block lname %}{{row.lname}}{% endblock %}
+
+{% block email %}{{row.email}}{% endblock %}
+
+{% block dob %}{{row.dob}}{% endblock %}
+
+{% block address %}{{row.address}}{% endblock %}
+
+{% block score %}{{row.score}}{% endblock %}
