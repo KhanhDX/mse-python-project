@@ -15,7 +15,7 @@
                                 data-target="#myModal">Add New Student
                         </button>
                     </h2>
-
+                    <!----------------- Notification ------------------->
                     {% with messages = get_flashed_messages() %}
                     {% for message in messages %}
                     <div class="alert alert-success alert-dismissable" role="alert">
@@ -56,7 +56,7 @@
                                    onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>
-                        <!----------------- Edit ------------------->
+                        <!----------------- Update ------------------->
                         <div id="modalEdit{{row.rnumber}}" class="modal fade" role="dialog">
                             {% include 'update_dialog.html' %}
                         </div>
@@ -64,6 +64,7 @@
                     </table>
 
                 </div>
+                <!----------------- Create ------------------->
                 <div id="myModal" class="modal fade" role="dialog">
                     {% include 'create_dialog.html' %}
                 </div>

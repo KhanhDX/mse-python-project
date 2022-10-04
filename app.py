@@ -15,12 +15,18 @@ def index():
     return render_template('index.html', students = allData)
 
 @app.route('/exportData')
-def export():
+def exportAll():
     allData = studentData.getAll()
-    res = json.dumps([ s.dump() for s in allData ],ensure_ascii=False)
+    res = json.dumps([s.dump() for s in allData], ensure_ascii=False)
     return res
 
-@app.route('/insert', methods = ['POST'])
+@app.route('/exportData/<rnumber>/')
+def exportOne(rnumber):
+    student = studentData.get(rnumber)
+    res = json.dumps(student.dump(), ensure_ascii=False) if student is not None else {}
+    return res
+
+@app.route('/insert', methods = ['GET', 'POST'])
 def insert():
     if request.method == 'POST':
         try:

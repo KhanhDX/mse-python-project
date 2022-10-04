@@ -41,7 +41,7 @@ class StudentDataAccess:
     def get(self, rnumber):
         sql_select = """SELECT roll_number, first_name, last_name, email, date_of_birth, address, score FROM student WHERE roll_number = :rnumber"""
         student = self.conn.cursor().execute(sql_select, {'rnumber': rnumber}).fetchone()
-        return student
+        return Student(student) if student is not None else None
 
     def createStudent(self, std):
         sql_insert = """INSERT INTO student VALUES(?, ?, ?, ?, ?, ?, ?)"""
