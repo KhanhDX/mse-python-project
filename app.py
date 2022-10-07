@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from pip._internal.utils.misc import tabulate
+
 from data_access import StudentDataAccess
 from student import Student
 
@@ -76,6 +78,18 @@ def delete(rnumber):
     except Exception as e:
         print(e)
         flash("Student delete failed!")
+    return redirect(url_for('index'))
+
+@app.route('/exportData-to-txt', methods = ['GET', 'POST'])
+def exportDataToFile():
+    allData = studentData.getAll()
+    allDataDct = {allData[i]: allData[i + 1] for i in range(0, len(allData), 2)}
+    table = allDataDct.items()
+
+    with open('datafile.txt', 'w') as xfile:
+        for item in allData:
+            xfile.write("%s \t %s %s \t %s \t %s \t %s \t %d\n" % (item.rnumber, item.fname, item.lname, item.dob, item.email, item.address, item.score))
+
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
