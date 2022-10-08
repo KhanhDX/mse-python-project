@@ -4,7 +4,7 @@
             <h5 class="modal-title">{% block title %}{% endblock %}</h5>
         </div>
         <div class="modal-body">
-            <form action="{% block urlForm %}{% endblock %}" method="POST">
+            <form action="{% block urlForm %}{% endblock %}" method="{% block method %}{% endblock %}">
                 <div class="form-group">
                     <label>Roll Number</label>
                     <input type="hidden" name="hid_rnumber" value="{% block hid_rnumber %}{% endblock %}">

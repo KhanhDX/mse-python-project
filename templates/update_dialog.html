@@ -6,6 +6,8 @@
 
 {% block urlForm %}{{url_for('update')}}{% endblock %}
 
+{% block method %}POST{% endblock %}
+
 {% block hid_rnumber %}{{row.rnumber}}{% endblock %}
 
 {% block rnumber %}{{row.rnumber}}{% endblock %}

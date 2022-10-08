@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from pip._internal.utils.misc import tabulate
 
 from data_access import StudentDataAccess
 from student import Student
@@ -28,49 +27,47 @@ def exportOne(rnumber):
     res = json.dumps(student.dump(), ensure_ascii=False) if student is not None else {}
     return res
 
-@app.route('/insert', methods = ['GET', 'POST'])
+@app.route('/insert', methods = ['POST'])
 def insert():
-    if request.method == 'POST':
-        try:
-            rnumber = request.form['rnumber']
-            checkDuplicate = studentData.get(rnumber.strip())
-            if checkDuplicate is not None:
-                flash('Roll number is existed!')
-                raise Exception()
-            fname = request.form['fname']
-            lname = request.form['lname']
-            email = request.form['email']
-            dob = request.form['dob']
-            address = request.form['address']
-            score = request.form['score']
-            stdData = Student([rnumber, fname, lname, email, dob, address, score])
-            studentData.createStudent(stdData)
-            flash("Student inserted successfully!")
-        except Exception as e:
-            print(e)
-            flash("Student insert failed!")
+    try:
+        rnumber = request.form['rnumber']
+        checkDuplicate = studentData.get(rnumber.strip())
+        if checkDuplicate is not None:
+            flash('Roll number is existed!')
+            raise Exception()
+        fname = request.form['fname']
+        lname = request.form['lname']
+        email = request.form['email']
+        dob = request.form['dob']
+        address = request.form['address']
+        score = request.form['score']
+        stdData = Student([rnumber, fname, lname, email, dob, address, score])
+        studentData.createStudent(stdData)
+        flash("Student inserted successfully!")
+    except Exception as e:
+        print(e)
+        flash("Student insert failed!")
     return redirect(url_for('index'))
 
-@app.route('/update', methods = ['GET', 'POST'])
+@app.route('/update', methods = ['POST'])
 def update():
-    if request.method == 'POST':
-        try:
-            rnumber = request.form['hid_rnumber']
-            fname = request.form['fname']
-            lname = request.form['lname']
-            email = request.form['email']
-            dob = request.form['dob']
-            address = request.form['address']
-            score = request.form['score']
-            stdData = Student([rnumber, fname, lname, email, dob, address, score])
-            studentData.updateStudent(stdData)
-            flash("Student updated successfully!")
-        except Exception as e:
-            print(e)
-            flash("Student update failed!")
+    try:
+        rnumber = request.form['hid_rnumber']
+        fname = request.form['fname']
+        lname = request.form['lname']
+        email = request.form['email']
+        dob = request.form['dob']
+        address = request.form['address']
+        score = request.form['score']
+        stdData = Student([rnumber, fname, lname, email, dob, address, score])
+        studentData.updateStudent(stdData)
+        flash("Student updated successfully!")
+    except Exception as e:
+        print(e)
+        flash("Student update failed!")
     return redirect(url_for('index'))
 
-@app.route('/delete/<rnumber>/', methods = ['GET', 'POST'])
+@app.route('/delete/<rnumber>/', methods = ['GET'])
 def delete(rnumber):
     try:
         studentData.deleteStudent(rnumber)
@@ -80,16 +77,13 @@ def delete(rnumber):
         flash("Student delete failed!")
     return redirect(url_for('index'))
 
-@app.route('/exportData-to-txt', methods = ['GET', 'POST'])
+@app.route('/exportData-to-txt', methods = ['GET'])
 def exportDataToFile():
     allData = studentData.getAll()
-    allDataDct = {allData[i]: allData[i + 1] for i in range(0, len(allData), 2)}
-    table = allDataDct.items()
-
-    with open('datafile.txt', 'w') as xfile:
+    with open('datafile.txt', 'w', encoding='utf-8') as xfile:
         for item in allData:
-            xfile.write("%s \t %s %s \t %s \t %s \t %s \t %d\n" % (item.rnumber, item.fname, item.lname, item.dob, item.email, item.address, item.score))
-
+            xfile.write("%s \t %s %s \t %s \t %s \t %s \t %d\n" %item.data())
+    flash("Export file successfully!")
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
