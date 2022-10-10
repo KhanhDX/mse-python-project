@@ -2,13 +2,11 @@
 
 {% block title %}Update Student{% endblock %}
 
-{% block disabledRNumber %} disabled {% endblock %}
+{% block editabledRNumber %} readonly {% endblock %}
 
 {% block urlForm %}{{url_for('update')}}{% endblock %}
 
 {% block method %}POST{% endblock %}
-
-{% block hid_rnumber %}{{row.rnumber}}{% endblock %}
 
 {% block rnumber %}{{row.rnumber}}{% endblock %}
 

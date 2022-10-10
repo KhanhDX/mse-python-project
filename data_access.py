@@ -31,17 +31,17 @@ class StudentDataAccess:
 
     def getAll(self):
         sql_select = """SELECT roll_number, first_name, last_name, email, date_of_birth, address, score FROM student"""
-        lst = self.conn.cursor().execute(sql_select).fetchall()
+        data = self.conn.cursor().execute(sql_select).fetchall()
         students = []
-        for item in lst:
+        for item in data:
             s = Student(item)
             students.append(s)
         return students
 
     def get(self, rnumber):
         sql_select = """SELECT roll_number, first_name, last_name, email, date_of_birth, address, score FROM student WHERE roll_number = :rnumber"""
-        student = self.conn.cursor().execute(sql_select, {'rnumber': rnumber}).fetchone()
-        return Student(student) if student is not None else None
+        data = self.conn.cursor().execute(sql_select, {'rnumber': rnumber}).fetchone()
+        return Student(data) if data is not None else None
 
     def createStudent(self, std):
         sql_insert = """INSERT INTO student VALUES(?, ?, ?, ?, ?, ?, ?)"""
