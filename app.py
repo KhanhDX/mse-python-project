@@ -1,3 +1,5 @@
+import sqlite3
+
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 from data_access import StudentDataAccess
@@ -27,40 +29,32 @@ def exportOne(rnumber):
     res = json.dumps(student.dump(), ensure_ascii=False) if student is not None else {}
     return res
 
+def extractForm(request):
+    rnumber = request.form['rnumber']
+    fname = request.form['fname']
+    lname = request.form['lname']
+    email = request.form['email']
+    dob = request.form['dob']
+    address = request.form['address']
+    score = request.form['score']
+    return rnumber, fname, lname, email, dob, address, score
+
 @app.route('/insert', methods = ['POST'])
 def insert():
     try:
-        rnumber = request.form['rnumber']
-        # check duplicate roll number in database
-        checkDuplicate = studentData.get(rnumber.strip())
-        if checkDuplicate is not None:
-            flash('Roll number is existed!')
-            raise Exception()
-        fname = request.form['fname']
-        lname = request.form['lname']
-        email = request.form['email']
-        dob = request.form['dob']
-        address = request.form['address']
-        score = request.form['score']
-        stdData = Student([rnumber, fname, lname, email, dob, address, score])
+        stdData = Student(extractForm(request))
         studentData.createStudent(stdData)
         flash("Student inserted successfully!")
     except Exception as e:
         print(e)
+        if type(e) is sqlite3.IntegrityError: flash("Roll number is existed!")
         flash("Student insert failed!")
     return redirect(url_for('index'))
 
 @app.route('/update', methods = ['POST'])
 def update():
     try:
-        rnumber = request.form['hid_rnumber']
-        fname = request.form['fname']
-        lname = request.form['lname']
-        email = request.form['email']
-        dob = request.form['dob']
-        address = request.form['address']
-        score = request.form['score']
-        stdData = Student([rnumber, fname, lname, email, dob, address, score])
+        stdData = Student(extractForm(request))
         studentData.updateStudent(stdData)
         flash("Student updated successfully!")
     except Exception as e:
@@ -89,4 +83,3 @@ def exportDataToFile():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
