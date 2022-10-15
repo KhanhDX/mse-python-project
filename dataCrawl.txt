@@ -1,0 +1,27 @@
+Thong tin sinh vien thu: 1
+RollNumber:MS001
+First Name:Nguyen Xuan
+Last Name:Cuong
+Email:cuongnx.work@gmail.com
+Date of birth:2022-10-04
+Address:Ha Noi
+Score:10.0
+
+Thong tin sinh vien thu: 2
+RollNumber:MS002
+First Name:Đặng Xuân
+Last Name:Khánh
+Email:demo@gmail.com
+Date of birth:2022-10-08
+Address:Ha Noi
+Score:10.0
+
+Thong tin sinh vien thu: 3
+RollNumber:MS003
+First Name:Khanh
+Last Name:Dang
+Email:kipkip9xx@gmail.com
+Date of birth:2022-10-05
+Address:hcm city
+Score:2.0
+

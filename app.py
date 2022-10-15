@@ -1,9 +1,13 @@
+import re
 import sqlite3
+
+import urllib
 
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 from data_access import StudentDataAccess
 from student import Student
+
 
 import json
 
@@ -37,7 +41,22 @@ def extractForm(request):
     dob = request.form['dob']
     address = request.form['address']
     score = request.form['score']
+
+    checkIsBlank([rnumber, fname, lname, email, dob, address, score])
+    checkValidateEmail(email)
+
     return rnumber, fname, lname, email, dob, address, score
+
+def checkValidateEmail(email):
+    regexEmail = r'^\S+@\S+\.\S+$'
+    if not (re.fullmatch(regexEmail, email)):
+        flash('Invalid Email')
+        raise Exception('Invalid Email')
+def checkIsBlank(input):
+    for text in input:
+        if(text.strip()==''):
+            flash('Input cannot be null or empty');
+            raise Exception ('Input cannot be null or empty')
 
 @app.route('/insert', methods = ['POST'])
 def insert():
@@ -72,14 +91,14 @@ def delete(rnumber):
         flash("Student delete failed!")
     return redirect(url_for('index'))
 
-@app.route('/exportData-to-txt', methods = ['GET'])
-def exportDataToFile():
-    allData = studentData.getAll()
-    with open('datafile.txt', 'w', encoding='utf-8') as xfile:
-        for item in allData:
-            xfile.write("%s \t %s %s \t %s \t %s \t %s \t %d\n" %item.data())
-    flash("Export file successfully!")
-    return redirect(url_for('index'))
+# @app.route('/exportData-to-txt', methods = ['GET'])
+# def exportDataToFile():
+#     allData = studentData.getAll()
+#     with open('datafile.txt', 'w', encoding='utf-8') as xfile:
+#         for item in allData:
+#             xfile.write("%s \t %s %s \t %s \t %s \t %s \t %d\n" %item.data())
+#     flash("Export file successfully!")
+#     return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
